@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Carregar gist na página de forma assíncrona</title>
-  <meta name="description" content="O Gist tem um problema, quando ele é incorporado de forma assíncrona na página, eu acabei percebendo isso aqui neste blog, o blogger tem um template que carr...">
+  <meta name="description" content="O Gist tem um problema, quando ele é incorporado de forma assíncrona na página, eu acabei percebendo isso no meu antigo blog, o blogger tem um template que c...">
 
   <link rel="stylesheet" href="/css/main.css">
   <link rel="canonical" href="https://victorvhpg.github.io//2014/11/20/carregar-gist-na-pagina-de-forma.html">
@@ -66,22 +66,27 @@
   </header>
 
   <article class="post-content">
-    O <a href="https://gist.github.com/" rel="nofollow" target="_blank">Gist</a> tem um problema, quando ele é incorporado de forma assíncrona na página, eu acabei percebendo isso aqui neste blog, o blogger tem um template que carrega os posts de forma assíncrona logo os meus gists não apareciam. <br />Por exemplo,&nbsp; o código 'embed' que o gist coloca fica assim:<br /><br /><i>&lt;script src="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74.js"&gt;&lt;/script&gt; </i><br /><br />Se você olhar o código deste arquivo, você verá que o github usa&nbsp; <i>document.write </i>para escrever, logo isso não funcionará caso você insira o gist&nbsp; de forma&nbsp; assíncrona.<br />No firefox/chrome aparece um aviso no console, algo parecido com isso:<br /><br /><i><b>"Foi ignorada uma chamada para document.write() a partir de um script externo carregado assincronamente."&nbsp;</b></i><br /><br /><i><b>"A call to document.write() from an asynchronously-loaded external script was ignored."</b></i><br /><i><br /></i><i><b>"Failed to execute 'write' on 'Document': It isn't possible to write into a document from an asynchronously-loaded external script unless it is explicitly opened."</b></i><br /><br />Existem várias formas de resolver isso, eu acabei fazendo uma solução que utiliza a "API" do gist, ela retorna um json(JSONP) com os dados(html/css) do gist.<br />Simplesmente obtem o json (JSONP) e exibe no elemento que contem o atributo<br /><b>data-gist</b><br /><br />Exemplo de uso:<br />Em vez de usar o "embed"&nbsp; gerado do gist,&nbsp; coloque a URL do gist no &nbsp; atributo "data-gist"&nbsp; do elemento onde você deseja exibir o gist.<br /><br />&lt;div data-gist="https://gist.github.com/victorvhpg/33889d0611905780e253"&gt;&lt;/div&gt;<br />&nbsp; <br /><div data-gist="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74"><script> carregaGist.init(); </script></div><br />
+    O <a href="https://gist.github.com/" rel="nofollow" target="_blank">Gist</a> tem um problema, quando ele é incorporado de forma assíncrona na página, eu acabei percebendo isso no meu antigo blog, o blogger tem um template que carrega os posts de forma assíncrona logo os meus gists não apareciam. <br />Por exemplo,&nbsp; o código 'embed' que o gist coloca fica assim:<br /><br /><i>&lt;script src="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74.js"&gt;&lt;/script&gt; </i><br /><br />Se você olhar o código deste arquivo, você verá que o github usa&nbsp; <i>document.write </i>para escrever, logo isso não funcionará caso você insira o gist&nbsp; de forma&nbsp; assíncrona.<br />No firefox/chrome aparece um aviso no console, algo parecido com isso:<br /><br /><i><b>"Foi ignorada uma chamada para document.write() a partir de um script externo carregado assincronamente."&nbsp;</b></i><br /><br /><i><b>"A call to document.write() from an asynchronously-loaded external script was ignored."</b></i><br /><i><br /></i><i><b>"Failed to execute 'write' on 'Document': It isn't possible to write into a document from an asynchronously-loaded external script unless it is explicitly opened."</b></i><br /><br />Existem várias formas de resolver isso, eu acabei fazendo uma solução que utiliza a "API" do gist, ela retorna um json(JSONP) com os dados(html/css) do gist.<br />Simplesmente obtem o json (JSONP) e exibe no elemento que contem o atributo<br /><b>data-gist</b><br /><br />Exemplo de uso:<br />Em vez de usar o "embed"&nbsp; gerado do gist,&nbsp; coloque a URL do gist no &nbsp; atributo "data-gist"&nbsp; do elemento onde você deseja exibir o gist.<br /><br />&lt;div data-gist="https://gist.github.com/victorvhpg/33889d0611905780e253"&gt;&lt;/div&gt;<br />&nbsp; <br /><div data-gist="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74"><script> carregaGist.init(); </script></div><br />
   </article>
+
+
+<iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=659101360886383" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:21px;" allowTransparency="true"></iframe>
+
+    <br />
     <div id="disqus_thread"></div>
       <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'victorvhpg-blog'; // required: replace example with your forum shortname
+		<script type="text/javascript">
+		    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		    var disqus_shortname = 'victorvhpg-blog'; // required: replace example with your forum shortname
 
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		    /* * * DON'T EDIT BELOW THIS LINE * * */
+		    (function() {
+		        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+		        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		    })();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     
      
      
