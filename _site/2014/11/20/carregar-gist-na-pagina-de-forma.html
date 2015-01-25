@@ -68,8 +68,6 @@
   <article class="post-content">
     O <a href="https://gist.github.com/" rel="nofollow" target="_blank">Gist</a> tem um problema, quando ele é incorporado de forma assíncrona na página, eu acabei percebendo isso no meu antigo blog, o blogger tem um template que carrega os posts de forma assíncrona logo os meus gists não apareciam. <br />Por exemplo,&nbsp; o código 'embed' que o gist coloca fica assim:<br /><br /><i>&lt;script src="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74.js"&gt;&lt;/script&gt; </i><br /><br />Se você olhar o código deste arquivo, você verá que o github usa&nbsp; <i>document.write </i>para escrever, logo isso não funcionará caso você insira o gist&nbsp; de forma&nbsp; assíncrona.<br />No firefox/chrome aparece um aviso no console, algo parecido com isso:<br /><br /><i><b>"Foi ignorada uma chamada para document.write() a partir de um script externo carregado assincronamente."&nbsp;</b></i><br /><br /><i><b>"A call to document.write() from an asynchronously-loaded external script was ignored."</b></i><br /><i><br /></i><i><b>"Failed to execute 'write' on 'Document': It isn't possible to write into a document from an asynchronously-loaded external script unless it is explicitly opened."</b></i><br /><br />Existem várias formas de resolver isso, eu acabei fazendo uma solução que utiliza a "API" do gist, ela retorna um json(JSONP) com os dados(html/css) do gist.<br />Simplesmente obtem o json (JSONP) e exibe no elemento que contem o atributo<br /><b>data-gist</b><br /><br />Exemplo de uso:<br />Em vez de usar o "embed"&nbsp; gerado do gist,&nbsp; coloque a URL do gist no &nbsp; atributo "data-gist"&nbsp; do elemento onde você deseja exibir o gist.<br /><br />&lt;div data-gist="https://gist.github.com/victorvhpg/33889d0611905780e253"&gt;&lt;/div&gt;<br />&nbsp; <br /><div data-gist="https://gist.github.com/victorvhpg/074fec2ff7749ae0cd74"><script> carregaGist.init(); </script></div><br />
   </article>
-
-
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -78,8 +76,9 @@
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=659101360886383&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
+<div class="fb-like" data-href="" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 
-    <br />
+    <br />  <br />
     <div id="disqus_thread"></div>
       <div id="disqus_thread"></div>
 		<script type="text/javascript">
