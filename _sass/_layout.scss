@@ -23,6 +23,13 @@
     }
 }
 
+.btnFork{
+    @include media-query($on-palm) {
+
+        display: none;
+    }
+}
+
 .site-nav {
     float: right;
     line-height: 56px;
@@ -49,6 +56,7 @@
         border: 1px solid $grey-color-light;
         border-radius: 5px;
         text-align: right;
+
 
         .menu-icon {
             display: block;
@@ -83,6 +91,7 @@
             display: block;
             padding: 5px 10px;
         }
+
     }
 }
 

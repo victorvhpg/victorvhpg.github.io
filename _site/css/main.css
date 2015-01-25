@@ -160,6 +160,10 @@ pre {
   .site-title, .site-title:visited {
     color: #424242; }
 
+@media screen and (max-width: 600px) {
+  .btnFork {
+    display: none; } }
+
 .site-nav {
   float: right;
   line-height: 56px; }
