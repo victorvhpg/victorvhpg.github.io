@@ -1,0 +1,190 @@
+---
+layout: post
+title: Download de arquivo com ajax
+date: '2015-02-06'
+author: Victor Hugo
+tags:
+- javascript
+- ajax
+- dicas
+---
+
+<div style="text-align:center;padding:20px 0">
+    <img src="/image/js2.png"  />
+</div>
+
+<p>
+		Atualmente fazer download de arquivo(binário) por ajax, pode ser feito de algumas maneiras. O XMLHttpRequest nível 2 suporta  o seguinte tipos de resposta : <code>arraybuffer</code>, <code>blob</code>, <code>document</code>, <code>json</code> e <code>text</code>.
+</p>
+<p>
+		Vou demonstrar  como realizar download de arquivos binários  utilizando os tipos  de resposta <code>arraybuffer</code> e <code>blob</code>.
+
+</p>
+
+
+	<h3>Conhecendo algumas propriedades do XMLHttpRequest:</h3>
+
+
+
+<p>
+	<ul>
+			<li>
+					<code>.responseType</code>
+					<p>
+						É a propriedade que define o tipo de  resposta que  a
+						requisição irá devolver. Com isto o navegador saberá fazer o parse correto. <br />
+						Pode ter estes valores:  <code>arraybuffer</code>,
+						<code>blob</code>, <code>document</code>, <code>json</code> e <code>text</code>.
+					</p>
+			</li>
+			<li>
+					<code>.response </code>
+					<p>
+						Após a requisição ter sido realizada com sucesso, o
+						<code>.response</code> terá o conteudo
+						"parseado"  que pode ser  <code>DOMString</code>, <code>ArrayBuffer</code>, <code>Blob</code>,
+						 <code>Document</code> ou <code>JSON</code> (deacordo com o responseType).
+					</p>
+
+			</li>
+	</ul>
+</p>
+
+
+<h3>
+
+Fazendo o download de arquivos binários
+
+</h3>
+
+<p>
+
+	Vou demonstrar o  download de arquivos binários com ajax  utilizando o conceito de <strong>Promises</strong>, se você ainda não sabe
+	o que são  <strong>Promises</strong>, por favor leia meu post  <strong><a href="/2014/11/24/javascript-promises_23.html" target="_blank"> JavaScript Promises</a></strong>.
+	<br />
+
+
+
+
+	<ul>
+
+			<li> <h4>Download utilizando ArrayBuffer</h4>
+
+			<p>ArrayBuffer é um tipo de Array de tamanho fixo contendo a representação binária(buffer de dados) de um arquivo, você não manipula ele diretamente,
+			para maninular ele você precisa
+			gerar um ArrayBufferView que poder ser através de um <a target="_blank"  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint8" >DataView</a> ou de um <a target="_blank"  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">Array tipado</a>.
+			ArrayBuffer são utilizados quando precisamos manipular os bytes de um arquivo, veja um exemplo utilizado pelo site Flickr:
+	        <a href="http://code.flickr.net/2012/06/01/parsing-exif-client-side-using-javascript-2/"> "Parsing Exif client-side using JavaScript" </a> </p>
+
+
+<p>
+Para fazer download de um arquivo usando ArrayBuffer, basta setar o responseType com "arraybuffer":
+</p>
+<script src="https://gist.github.com/victorvhpg/6b8515c623b2045fc074.js"></script>
+<p>
+
+Após o download do arquivo o    <code>.response </code> será um objeto ArrayBuffer, e você já pode utilizá-lo,
+por exemplo, você pode a partir de um ArrayBuffer de um arquivo de video, você pode criar um Blob para gerar uma URL que será o src de um elemento  de video. Veja:
+</p>
+<script src="https://gist.github.com/victorvhpg/a1849eed4400c6c607f9.js"></script>
+<p>
+Veja o exemplo rodando: <a href="/assets/conteudo-posts/2015-02-06-download-de-arquivo-com-ajax/ab-video.html" target="_blank"> exemplo</a>
+</p>
+<br />
+            <p>
+            Como eu já disse, é possível manipular os bytes do ArrayBuffer,
+            através de um <a target="_blank"  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView/getUint8" >DataView</a> ou de um <a target="_blank"  href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays">Array tipado</a>.<br />
+             Para manipular o ArrayBuffer byte a byte (8bits por vez) podemos utilizar o tipo <code>Uint8Array</code>, que retorna
+             um array contendo o ArrayBuffer separado byte a byte, com tamanho de 8bits por posição.<br />
+             Veja esta ilustração:
+             <div style="font-size:10px;text-align:center;border:1px solid #333;margin:10px 0">
+
+                    <img src="/assets/conteudo-posts/2015-02-06-download-de-arquivo-com-ajax/bytes.png"  />
+
+             </div>
+
+
+
+             Meu próximo exemplo vou  identificar o tipo
+            de arquivo lendo os  bytes de assinatura("Número Mágico")  utilizando  <code>DataView</code> <code>(DataView.prototype.getUint8())</code>.Cada  arquivo tem  uma assinatura hexadecimal conhecida como
+             <a target="_blank" href="http://pt.wikipedia.org/wiki/N%C3%BAmero_m%C3%A1gico_%28inform%C3%A1tica%29"> "Número Mágico"</a>, sendo assim possivel indentificar  seu  tipo, veja a <a target="_blank" href="http://en.wikipedia.org/wiki/List_of_file_signatures"> lista de assinaturas dos arquivos.</a>
+            <br /> Exemplo:
+<script src="https://gist.github.com/victorvhpg/c72cfc6612408bc95d9c.js"></script>
+
+<p>
+Veja o exemplo rodando: <a href="/assets/conteudo-posts/2015-02-06-download-de-arquivo-com-ajax/ab-numeroMagico.html" target="_blank"> exemplo</a>
+</p>
+
+
+            </p>
+
+
+
+
+			</li>
+
+
+			<li> <h4>Download utilizando Blob</h4>
+
+
+<p>
+<a target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/API/Blob">Blob</a> é um objeto que representa um arquivo.Ele pode ser usado para fazer diversas operações nos arquivos.
+<br />
+Para fazer download de um arquivo usando Blob, basta setar o responseType com "blob":
+</p>
+<script src="https://gist.github.com/victorvhpg/1de136d3394a8e76bbac.js"></script>
+<p>
+
+No exemplo seguinte será realizado download de um video igual ao exemplo do ArrayBuffer, mas como nos já temos o blob que veio do  <code>.response</code>, então fica mais simples:
+</p>
+<script src="https://gist.github.com/victorvhpg/05de5b2d183a9fe5f1f3.js"></script>
+
+
+
+<p>
+Veja o exemplo rodando: <a href="/assets/conteudo-posts/2015-02-06-download-de-arquivo-com-ajax/b-video.html" target="_blank"> exemplo</a>
+</p>
+
+
+
+			</li>
+
+	</ul>
+
+
+
+
+</p>
+
+
+<p>
+Como demonstrado com ajax(XHR) podemos fazer download de arquivos binários e manipulados bit a bit.<br />
+Bom, por hoje é só.
+
+<h2>Referências</h2>
+
+<ul>
+ <li>
+ <a href="https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/Sending_and_Receiving_Binary_Data" target="_blank"> Sending and Receiving Binary Data </a>
+ </li>
+
+  <li>
+ <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Blob" target="_blank"> Blob </a>
+ </li>
+  <li>
+ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays" target="_blank"> Typed arrays </a>
+ </li>
+  <li>
+ <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView/" target="_blank"> DataView </a>
+ </li>
+
+   <li>
+ <a href="http://en.wikipedia.org/wiki/List_of_file_signatures" target="_blank"> List of file signatures </a>
+ </li>
+
+
+
+
+
+</ul>
+</p>
