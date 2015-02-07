@@ -2,7 +2,9 @@
     "use strict";
 
     document.addEventListener("DOMContentLoaded", function() {
-        downloadArquivo("./video.ogv").then(function(blob) {
+        downloadArquivo("./video.ogv", function(progresso, total, perc) {
+            document.querySelector("progress").value = perc;
+        }).then(function(blob) {
             //cria o elemento video
             var video = document.createElement("video");
             video.autoplay = true;
@@ -11,7 +13,7 @@
             //apos o video carregar  pode remover url window.URL.revokeObjectURL(video.src);
             //coloca o video no body
             document.querySelector("body").appendChild(video);
-            document.querySelector("#url").innerHTML = "URL do video: <a href='" + video.src+"' target='_blank'>" + video.src+"</a>";
+            document.querySelector("#url").innerHTML = "URL do video: <a href='" + video.src + "' target='_blank'>" + video.src + "</a>";
         }).catch(function(erro) {
             console.log(erro);
         });
