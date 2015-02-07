@@ -230,7 +230,7 @@
 .post-content {
 
 p{
-    letter-spacing: -0.02em;
+
     line-height: 1.45em;
 
     text-align: justify;
@@ -238,11 +238,14 @@ p{
     margin-bottom: $spacing-unit;
 
     h2 {
+        padding-bottom: 0.3em;
+
+        line-height: 1.225;
+        border-bottom: 1px solid #dfdfdf;
         text-align: left;
         font-size: 32px;
         margin:  50px 0 20px 0;
-        border-bottom: 1px solid #777;
-        padding-bottom:5px;
+
         @include media-query($on-laptop) {
             font-size: 28px;
         }
