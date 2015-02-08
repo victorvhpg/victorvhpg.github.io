@@ -17,8 +17,8 @@
 {% if page.title %}
     <meta content="{{ page.title | strip_html | escape | strip_newlines }}" property="og:title">
     <meta content="article" property="og:type">
-    <meta content="{{ page.title | strip_html | escape | strip_newlines | truncate: 260 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 260 }}" property="og:description">
-    <meta name="description" content="{{ page.title | strip_html | escape | strip_newlines | truncate: 160 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 260 }}">
+    <meta content="{{ page.title | strip_html | escape | strip_newlines | truncate: 350 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 350 }}" property="og:description">
+    <meta name="description" content="{{ page.title | strip_html | escape | strip_newlines | truncate: 160 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 350 }}">
 
  {% if page.date %}
    <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
@@ -27,8 +27,8 @@
 {% else %}
     <meta content="blog" property="og:type">
     <meta content="{{ site.title | strip_html | escape | strip_newlines  }}" property="og:title">
-    <meta content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 260 }}" property="og:description">
-    <meta name="description" content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 260 }}">
+    <meta content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 350 }}" property="og:description">
+    <meta name="description" content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 350 }}">
 {% endif %}
 
 {% if page.url %}
