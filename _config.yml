@@ -2,9 +2,9 @@
 title: Victor Hugo de Paiva Gonçales - victorvhpg
 email: victorvhpg@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
- Victor Hugo de Paiva Gonçales - victorvhpg 
+ Victor Hugo de Paiva Gonçales - victorvhpg
 baseurl: ""
-url: "https://victorvhpg.github.io/"  
+url: "https://victorvhpg.github.io"
 twitter_username: victorvhpg
 github_username:  victorvhpg
 # Build settings

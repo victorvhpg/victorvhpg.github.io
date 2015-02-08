@@ -1,14 +1,58 @@
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
-  <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | escape | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+<title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
 
-  <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
-  <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
-  <script src="/js/jquery.js"></script>
-  <script src="/js/carregaGist.js"></script>
+<link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+<link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}" />
+<link href="https://plus.google.com/u/0/103294004946026560597" rel="publisher" >
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@victorvhpg">
+<meta name="twitter:creator" content="@victorvhpg">
+<meta name="twitter:domain" content="http://victorvhpg.github.io" >
+<meta content="{{ site.title | strip_html | escape | strip_newlines }}" property="og:site_name">
+{% if page.title %}
+    <meta content="{{ page.title | strip_html | escape | strip_newlines }}" property="og:title">
+    <meta content="article" property="og:type">
+    <meta content="{{ page.title | strip_html | escape | strip_newlines | truncate: 260 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 260 }}" property="og:description">
+    <meta name="description" content="{{ page.title | strip_html | escape | strip_newlines | truncate: 160 }} - {{ page.content | strip_html | escape | strip_newlines | truncate: 260 }}">
+
+ {% if page.date %}
+   <meta content="{{ page.date | date_to_xmlschema }}" property="article:published_time">
+ {% endif %}
+<meta content="{{ site.url }}/sobre/" property="article:author">
+{% else %}
+    <meta content="blog" property="og:type">
+    <meta content="{{ site.title | strip_html | escape | strip_newlines  }}" property="og:title">
+    <meta content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 260 }}" property="og:description">
+    <meta name="description" content="{{ site.description  | strip_html | escape | strip_newlines  | truncate: 260 }}">
+{% endif %}
+
+{% if page.url %}
+<meta content="{{ site.url }}{{ page.url }}" property="og:url">
+{% endif %}
+
+{% if page.image %}
+<meta content="{{ page.image }}" property="og:image">
+{% else %}
+<meta content="http://victorvhpg.github.io/image/js2.png" property="og:image">
+{% endif %}
+
+{% if page.categories %}
+{% for category in page.categories limit:1 %}
+<meta content="{{ category }}" property="article:section">
+{% endfor %}
+{% endif %}
+{% if page.tags %}
+{% for tag in page.tags %}
+<meta content="{{ tag }}" property="article:tag">
+{% endfor %}
+{% endif %}
+
+<script src="/js/jquery.js"></script>
+<script src="/js/carregaGist.js"></script
+
 </head>
