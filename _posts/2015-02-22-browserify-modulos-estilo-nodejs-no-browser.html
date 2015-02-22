@@ -1,0 +1,207 @@
+---
+layout: post
+title: Browserify - Gerenciamento de Módulos estilo Node.js no browser
+date: '2015-02-22'
+author: Victor Hugo
+tags:
+- javascript
+- desenvolvimento web
+- browserify
+---
+
+
+
+<div style="text-align:center;padding:20px 0">
+    <img src="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/browserify.png" alt="" />
+</div>
+
+<p>
+      Hoje em dia qualquer aplicação descente utiliza algum tipo de gerenciamento de módulos JavaScript, seja padrão AMD ou CommonJS. Ter um gerenciamento de módulos nos dá uma infinidate de vantagens no desenvolvimento de grandes aplicações JavaScript, seu código fica muito mais organizado, reutilizável, escalável, com controle dependências perfeito, padronizado, além de outras vantagens.<br />
+No lado do browser tenho utilizado o padrão AMD (através do RequireJS) em alguns projetos já alguns anos, nunca tinha utilizado o padrão CommonJS no browser, mas agora com o Browserify é possível desenvolver módulos estilo Node.js para rodar no browser ;)
+
+
+
+
+</p>
+
+<h2>
+O que é Browserify?
+</h2>
+
+<p>Browserify é uma ferramenta Node.js desenvolvida por um cara muito inteligente/doido chamado <a target="_blank" href="https://github.com/substack">James Halliday(substack)</a>, com o Browserify podemos  escrever  nossos  módulos igual nós  escrevemos    os módulos de Node.js, mas ele  irá rodar no browser, ou seja, usamos o padrão  CommonJS que é utilizado no Node.js, mas para rodar no browser.E o mais legal podemos escrever um módulo que rodará tanto no Node.js quanto no browser, além de também poder usar  módulos do <a target="_blank" href="https://www.npmjs.com/">npm</a>.<br /> Resumidamente o que o Browserify faz é: ele analisa seus módulos procurando as dependências recursivamente(os 'require(...)') gerando um único arquivo  JavaScript com todos os módulos empacotados para rodar no browser.
+
+</p>
+
+<h2>  Instalando o Browserify </h2>
+<p>
+
+Para instalar  basta rodar um npm install e pronto.
+<br />Obs: É claro que antes você deve ter o Node.js instalado ;)
+</p>
+<script src="https://gist.github.com/victorvhpg/ec8d72ef2457fe0eff4e.js"></script>
+
+<h2>  Criando um módulo </h2>
+
+<p>
+Para criar um módulo fazemos do mesmo modo  que no Node.js, pois  o Browserify utiliza o padrão CommonJS.<br />
+O módulo  será o que  tiver na propriedade <code>module.exports</code> ou  <code>exports</code>(que é o mesmo que  <code>module.exports</code>).<br />
+Veja este exemplo que cria um   um módulo chamado Poder, está expondo  em  <code>module.exports</code> o constructor Poder:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/bb96744f3458acd01307.js"></script>
+
+<p>
+Veja outro exemplo de módulo chamado 'qualquerCoisa',   exportando propriedades e métodos em <code>exports</code>:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/667b4cfcfeb7053fff79.js"></script>
+
+<h2>Utilizando os módulos criados</h2>
+<p>
+Para utilizar os módulos criados, basta  utilizar o <code>require</code> passando  o caminho/id do módulo,
+o algoritmo  que resolve o módulo é o mesmo utilizado no Node.js, falando basicamente, se ele não encontrar no diretório especificado então busca no diretório node_modules atual senão encontrar então busca no diretório pai node_modules  e assim sucessivamente até encontrar ou gerar um erro caso não exista  o módulo.
+</p>
+
+<p>
+Utilizando o módulo 'qualquerCoisa'
+<p>
+<script src="https://gist.github.com/victorvhpg/fdd00342907590a5e867.js"></script>
+<p>
+Utilizando o módulo 'Poder' dentro de  outro módulo chamado 'Personagem'
+<p>
+<script src="https://gist.github.com/victorvhpg/038d6cd2537293ffb3f1.js"></script>
+
+<p>
+Veja outro exemplo de um arquivo principal 'app.js'  que depende de outros módulos
+</p>
+<script src="https://gist.github.com/victorvhpg/36948d6c2892e9a41cab.js"></script>
+
+
+<h2> Utilizando módulos do npm</h2>
+
+<p>
+Para utilizar os módulos que estejam publicados no npm basta  instala-los e fazer um <code>require</code> do módulo.
+<br/>  Por exemplo, utilizar jquery que está publicada  no npm:<br />
+</p>
+<ol>
+
+<li><p>  instalar</p>
+<script src="https://gist.github.com/victorvhpg/6c3a17cee4266e3cf206.js"></script>
+<p>
+
+Ao instalar, jquery  ficará  no diretório  <code>node_modules/jquery</code> de seu  projeto.
+<br />
+Obs:--save é para o npm  colocar no 'package.json'  jquery  sendo uma dependência
+</p>
+
+
+</li>
+
+<li>
+<p>  utilizar</p>
+<script src="https://gist.github.com/victorvhpg/e6a4e70305c4bb6009ad.js"></script></li>
+
+</ol>
+
+<h2> Build dos módulos </h2>
+<p>
+Depois que os módulos foram criados é necessários fazer um build deles com o Browserify,
+que irá gerar um único arquivo com todos os módulos juntos pronto para serem  executados no browser.
+Para gerar basta  executar o comando <code>browserify</code> dizendo qual o arquivo de 'partida' (é o .js principal de sua aplicação) e o nome do arquivo que você deseja que ele gere, o Browserify  a partir  do arquivo de partida, irá analisar todas as  dependências  recursivamente e irá  gerar um único arquivo.
+<br />Supondo que o arquivo principal seja   'js/app.js' e o arquivo de saída seja 'pacoteComTodosModulos.js'
+o comando ficaria assim:
+
+</p>
+<script src="https://gist.github.com/victorvhpg/7cd23b224a27e81524f2.js"></script>
+<p>
+
+Aṕos o build  você   poderá utilizar seus módulos no browser,  é só chamar o arquivo de saída no seu html.<br/>
+Exemplo:
+
+</p>
+
+<script src="https://gist.github.com/victorvhpg/0a4be59a18fffa288622.js"></script>
+
+<h2>Minificando</h2>
+<p>
+Uma coisa legal de se  fazer  é minificar o arquivo de sáida deixando ele ainda menor,
+para isso podemos utilizar o <a href="https://www.npmjs.com/package/uglify-js" target="_blank">uglify-js</a>.
+<br />
+Minificando a saída do  Browserify com o uglify-js:
+</p>
+<script src="https://gist.github.com/victorvhpg/08bc3a659a1652ce7adc.js"></script>
+
+
+
+<h2>Depurando os módulos</h2>
+<p>
+Como o arquivo final é apenas um arquivo  contendo todos os módulos, fica ruim depurar todos os módulos em um unico arquivo,
+para resolver isso basta colocar a opção <code>--debug</code> na hora de fazer o build, com isso o Browserify irá gerar os
+<code>Source Maps</code>  fazendo que o navegador  possa identificar cada módulo  em um único arquivo, apesar de tudo estar em um unico arquivo o navegador interpreta como eles  estivessem  separados.Mas o ideal quando você for colocar em produção é deixar sem os <code>Source Maps</code> para que o arquivo fique menor.
+<script src="https://gist.github.com/victorvhpg/ce0efb9b50441a63c771.js"></script>
+
+Veja os  <code>Source Maps</code> em ação:
+<br />No Firefox:<br />
+
+
+  <a href="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/firefox.png" target="_blank">
+  <img src="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/firefox.png" alt="" /></a>
+
+<br />
+No Chrome:<br />
+
+  <a href="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/chrome.png" target="_blank">
+  <img src="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/chrome.png" alt="" /></a>
+<br />
+
+No IE:<br />
+  <a href="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/ie.png" target="_blank">
+  <img src="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/ie.png" alt="" /></a>
+
+</p>
+
+
+
+
+<h2>Automatizando o build</h2>
+
+<p>
+Se você alterar  algum módulo você terá que dar outro  build para refletir  esta mudança no arquivo de saída.
+<br />Mas como fazer isso toda hora é uma tarefa cansativa, existe algumas soluções que automatizam esse processo,
+por exemplo <a href="https://github.com/substack/watchify" target="_blank">watchify</a>  fica monitorando seus módulos e quando você realiza  alguma alteração em algum módulo ele automaticamente faz outro build atualizando o arquivo de saída.
+<br />
+Rodando o <code>watchify</code> para gerar build automáticos:
+<script src="https://gist.github.com/victorvhpg/adf6142897a4deb9c2b9.js"></script>
+</p>
+
+
+
+<h2>
+    Exemplo rodando
+
+</h2>
+<p>
+
+Para visualizar estes  exemplos rodando acesse:
+ <a target="_blank" href="/assets/conteudo-posts/browserify-modulos-estilo-nodejs-no-browser/browserify-exemplo/">Exemplo</a>
+</p>
+
+<h2>Conclusão</h2>
+<p>
+O uso do Browserify, torna possível o uso de módulos no padrão CommonJS   no browser e se você já usa este padrão no Node.js
+
+então poderá usar só um padrão de módulo tanto no lado do servidor quanto no lado do client/browser.
+O uso do Browserify  já está bastante difundido na comunidade JavasScript, por exemplo só no área de games tem vários módulos com suporte à Browserify, veja esta lista: <a href="https://github.com/hughsk/game-modules/wiki/Modules" target="_blank">Lista de Módulos para Games com Suporte à Browserify</a>.<br />
+Eu só mostrei o básico do uso do Browserify, ele possiu várias outras caracteristicas, caso você deseja aprender mais, acessa o github do <a target="_blank" href="https://github.com/substack/node-browserify#usage" >Browserify</a>.
+
+
+</p>
+
+<h2>Referências</h2>
+
+<ul>
+    <li> <a href="http://www.browserify.org" target="_blank">Browserify.org</a> </li>
+    <li> <a href="https://github.com/substack/browserify-handbook" target="_blank">Browserify handbook</a> </li>
+     <li> <a href="https://github.com/substack/node-browserify#usage" target="_blank">Browserify</a> </li>
+     <li><a target="_blank" href="https://github.com/victorvhpg/browserify-exemplo">Repositório de exemplo Browserify </li>
+</ul>
