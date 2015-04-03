@@ -30,16 +30,15 @@ Por que fazer o "build" dos módulos ?
    Grandes aplicações javascript possuem vários módulos,
    quando nós estamos em um ambiente de desenvolvimento o ideal
    é deixar estes módulos em arquivos distintos, para tornar o desenvolvimento
-   destes módulos de uma maneira "isolada", de fácil manutenção, e entre outros benefícios. <br />
-   Tendo os módulos separados faz com que,
-   quando a aplicação rodar, o navegador irá fazer uma requisição
+   destes fácil manutenção, ter o código organizado, "isolado", quando necessário, dentre outros benefícios. <br />
+   Ao manter os módulos separados, quando a aplicação rodar, o navegador irá fazer uma requisição
    para cada módulo solicitado.
    <br />Já em um ambiente de produção o ideal é ter
-   menos arquivos possível(menos requisições), ou seja,
+   menos arquivos possível (menor o número de requisições), ou seja,
    deixar  todos  os  módulos "empacotados"
-   e ainda minificar estes módulos.Tendo os módulos "empacotados"
-   em apenas um arquivo e ainda minificá-los, reduz o número de requisições
-   e também o total de tráfego da rede.
+   e ainda minificar estes módulos. Com os módulos "empacotados"
+   em apenas um arquivo e ainda minificados, o número de requisições
+   e também o total de tráfego da rede de diminuindo, por consequência a aplicação é carregada mais rápido pelo cliente.
 
 
 </p>
@@ -63,15 +62,15 @@ Módulos do Facebook: <br />
 Conhecendo o r.js
 </h2>
 <p>
-   Para  fazer este "build" existem várias ferramentas e vários modos,
-   quando nós estamos desenvolvendo nossos módulos javascript no  padrão AMD,
-   também temos  a disposição várias maneiras de  fazer  este  build,
-   uma delas  é  utilizar  a  ferramenta de otimização chamada "r.js" que o próprio
+   Para  fazer este "build" existem várias ferramentas e várias maneiras,
+   quando desenvolvemos nossos módulos javascript no padrão AMD,
+   também temos a disposição várias maneiras de  fazer  este  empacotamento,
+   e uma delas  é  utilizar  a  ferramenta de otimização chamada "r.js" que o próprio
    RequireJS dispõe.
    O "r.js" pode realizar  as   seguintes tarefas:
    <ul>
         <li>Empacotar os módulos em um único arquivo e minificá-los usando UglifyJS ou Closure Compiler</li>
-        <li>Também ele otimiza CSS, mas isso não será abordado neste post.</li>
+        <li>Também é capaz de otimizar o CSS da aplicação, mas isso não será abordado neste post.</li>
    </ul>
 
 </p>
@@ -80,11 +79,11 @@ Conhecendo o r.js
 
 
 <p>
-Para instalar o r.js, basta instalar o RequireJS e pronto o  r.js já  vem junto.
+Para instalar o r.js, basta instalar o RequireJS e pronto, o r.js já vem junto.
 <script src="https://gist.github.com/victorvhpg/a871265a16b8b5a76b15.js"></script>
-Após a instalação global, o comando "r.js" estará disponível no terminal.No windows o  comando será "r.js.cmd".
+Após a instalação global, o comando "r.js" estará disponível no terminal. No windows o  comando será "r.js.cmd".
 <br />
-Obs: é claro que você antes  deve  ter instalado o Node.js ;)
+Obs: É claro que é necessário ter previamente instalado o Node.js ;)
 
 </p>
 
@@ -121,7 +120,7 @@ Algumas  opções:
 O  arquivo  de  configuração ficará assim:
 <script src="https://gist.github.com/victorvhpg/1c70fbf0b4f2416b459c.js"></script>
 
-Depois de ter  criado o arquivo  de configuração do build no caminho "build/config.build.js",  é só executar no terminal este comando:
+Depois de ter  criado o arquivo  de configuração do build no caminho "build/config.build.js",  basta executar no terminal este comando:
 <script src="https://gist.github.com/victorvhpg/87942bfb9a53237a3a0e.js"></script>
 O arquivo final estará  em  "../js-build/build.js"  (o que foi definido     em "out"),
 com todos  os módulos  empacotados e minificados.<br />
@@ -145,7 +144,7 @@ veja este  exemplo:
 <h2>Conclusão </h2>
 <p>
 
- Se  você desenvolve  javascript de uma  maneira  correta, concerteza usa  algum  padrão  de módulo, e se  você usa o padrão  AMD (Asynchronous Module Definition), o  r.js ideal para "empacotar" seus  módulos.
+ Se  você desenvolve  javascript de uma  maneira  correta, com certeza usa  algum  padrão de módulo para organização do código, e se  você usa o padrão  AMD (Asynchronous Module Definition), o  r.js é ideal para "empacotar"  módulos da aplicação.
 </p>
 
 <h2>Referências</h2>
