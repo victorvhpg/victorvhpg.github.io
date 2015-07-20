@@ -45,8 +45,7 @@ no   atributo "data-gist"  do elemento onde você deseja exibir o gist.
             $div.html("Carregando <a href='" + url + "'>Gist</a>...");
             this.getGist(url).done(function(obj) {
                 if (!_CACHE.css[obj.stylesheet]) {
-                    $("head").append("<link href='" + obj.stylesheet +
-                        "'  type='text/css' rel='stylesheet'  />");
+                    $("head").append(obj.stylesheet);
                     _CACHE.css[obj.stylesheet] = obj.stylesheet;
                 }
                 $div.html($.trim(obj.div));
