@@ -1,0 +1,125 @@
+---
+layout: post
+title: Automatizando tarefas nas páginas com PhantomJS
+date: '2016-06-12'
+author: Victor Hugo
+image: https://victorvhpg.github.io/assets/conteudo-posts/2016/phantomjs/logo.png
+tags:
+- javascript
+- desenvolvimento web
+- PhantomJS
+---
+
+
+<div style="text-align:center;padding:20px 0">
+    <img style="width:600px" src="/assets/conteudo-posts/2016/phantomjs/logo.png" alt="" />
+</div>
+
+<p>
+    PhantomJS básicamente é um browser sem interface gráfica com engine WebKit(ou seja similar ao Safari e Chrome antes do Blink), que você roda em background e manipula via uma API JavaScript, com ele é possível fazer várias tarefas automatizadas, como as
+    seguintes:
+
+    <ul>
+        <li>
+            <strong>Testes automatizados:</strong> Realizar testes sem ter
+             que abrir um browser e ainda utilizando algum framework de teste JavaScript como
+             Jasmine, QUnit, Mocha entre outros. Já existem ferramentas que usam o PhantomJS por baixo
+             para facilitar testes, por exemplo o  <a href="http://casperjs.org/" target="_blank">CaspeJS</a>
+        </li>
+        <li>
+            <strong> Monitoramento de requisições:</strong> Interceptar qualquer requisição que uma página faça sendo possível fazer analises de performace, tempo de carregamento, e outras coisas relacionadas ao tráfego de rede de uma página.
+        </li>
+        <li>
+            <strong>Navegação automatizada:</strong> Acessar e manipular qualquer elemento de uma página (css, javascript, SVG, Canvas, DOM) sendo possível também navegar entre páginas num processo todo automatizado.
+        </li>
+
+        <li>
+            <strong>Screenshot de páginas: </strong> Realizar um screenshot de qualquer página web, sendo possível salvar este screenshot tanto como imagem ou PDF, logo podemos usar pra gerar algum relatório em PDF usando apenas HTML!!!!
+        </li>
+        <li>
+            <strong>Uso malicioso: </strong> Isso não vem ao caso.
+        </li>
+
+    </ul>
+
+    E adivinha em qual linguagem estas automações são escritas? Lógico que em JavaScript ;).
+</p>
+
+<h2> Casos de uso  </h2>
+<p>
+    Abaixo alguns projetos que usam PhantomJS de alguma forma:
+    <ul>
+        <li>Bootstrap</li>
+        <li>CodeMirror</li>
+        <li>Ember.js</li>
+        <li>Grunt</li>
+        <li>Modernizr</li>
+        <li>YUI3</li>
+        <li>Zepto</li>
+        <li>Durandaljs</li>
+        <li>Twitter</li>
+        <li><a href="http://phantomjs.org/users.html" target="_blank"> Veja mais + </a> </li>
+    </ul>
+    Eu já utilizei PhantomJS no meu trabalho na Unoeste, lá já desenvolvi alguns
+    certificados que são gerados em PDF via PhantomJS, são desenvolvidos apenas com HTML e chamados via uma aplicação escrita em C#,
+    ficando muito mais fácil o desenvolvimento e manutenção do mesmo.
+
+</p>
+
+
+<h2>Baixando o PhantomJS</h2>
+
+<p>
+    Não há necessidade de instalar o PhantomJS, apenas é necessário baixar o executável, colocar em algum diretório e pronto, depois você já pode usá-lo.
+    <br />
+    <br /> Baixe o PhantomJS aqui: <a href="http://phantomjs.org/download.html" target="_blank">http://phantomjs.org/download.html</a>
+</p>
+
+<h2>Como usar</h2>
+
+<p>
+    Para executar alguma tarefa no PhantomJS é necessário criar um arquivo javascript e depois fazer o PhantomJS executar este javascript, a maneira de executar o PhantomJS pode ser direto pelo prompt de comando ou através de alguma linguagem que chame o
+    processo do PhantomJS para ser executado.
+
+    <br />Por exemplo, vou criar um arquivo javascript que acessa algum site e extrai alguma informação, neste exemplo estou acessando meu blog pegando os links que estão na página inicial e gerando um screenshot após ter colocado todos os links numa lista
+    no topo e ter deixado em vermelho a url dos links ao lado de cada link na página.
+    <br /> Veja como ficou o código:
+    <script src="https://gist.github.com/victorvhpg/929273d7cfa486566dd7640661f37d39.js"></script>
+
+    O resultado desta execução será uma imagem "pagina.png", veja como ficou:
+
+    <div style="text-align:center;padding:4px;border:1px solid #333">
+        <a href="/assets/conteudo-posts/2016/phantomjs/pagina.png" target="_blank">
+            <img src="/assets/conteudo-posts/2016/phantomjs/pagina.png" style="height:600px" alt="" />
+        </a>
+    </div>
+</p>
+
+
+<h2> Executando via  prompt de comando/terminal</h2>
+
+<p>
+    Para executar o PhantomJS, via prompt, abra seu terminal de comando e entre no diretório onde você baixou o PhantomJS, e execute o seguinte comando:
+    <script src="https://gist.github.com/victorvhpg/cf57542430459b51408acbf14645dec1.js"></script>
+</p>
+
+
+<p>
+    Obs: você pode configurar seu PATH para o comando PhantomJS para não ter que ir toda hora no diretório
+</p>
+
+<h2> Executando via  uma aplicação Node.js </h2>
+<p>
+    Para executar o PhantomJS via node, só é preciso chamar o processo do phantomjs com o método exec ou spawn passando o caminho do arquivo js, por exemplo:
+    <script src="https://gist.github.com/victorvhpg/d4850a2ba18221edc32e2aa49c3ae828.js"></script>
+</p>
+
+<h2>Conclusão</h2>
+<p>
+PhantomJS oferece uma API muito simples de usar, e suas capacidades de automatizações de
+tarefas como se tivesse  num browser ajuda muito, seja para testes, análises, geração de PDF/imagem ele é muito útil, vale a pena usar ele.
+</p>
+<h2>Referências</h2>
+<ul>
+    <li> <a href="http://phantomjs.org/" target="_blank"> Site do PhatomJS </a></li>
+</ul>

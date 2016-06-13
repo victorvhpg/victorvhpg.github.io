@@ -1,0 +1,232 @@
+---
+layout: post
+title: Aplicações WEB ultra rápidas com Varnish
+date: '2015-08-26'
+author: Victor Hugo
+image: xxxxxxxx
+tags:
+- varnish
+- desenvolvimento web
+- cache
+- servidor
+---
+
+
+<div style="text-align:center;padding:20px 0">
+    <img src="/assets/conteudo-posts/2015/varnish/netstat.png" alt="" />
+</div>
+
+<p>
+    Aplicações WEB que possuem milhares de usuários simultâneos, necessitam de soluções para amenizar o load de seus servidores, uma dessas soluções é o uso de cache e balanceamento de carga no servidor com software Varnish.
+</p>
+
+<h2>
+    O que é Varnish
+</h2>
+
+<p>
+    Varnish é um proxy reverso open source que acelera as requisições HTTP, ideal para aplicações WEB com elevado número de acessos simultâneos, ele é uma ponte(proxy reverso) entre o cliente (navegador) e seu(s) servidor(res), com ele é possível definir
+    regras de cache HTTP e balanceamento de carga, evitando que seu servidor de aplicação fique sobrecarregado com processamento de requisições HTTP.
+    <br/> Varnish armazena o cache em memória RAM, tornando o acesso ao recurso muito mais rápido, diminuindo o tempo de resposta da requisição.
+    <br /> Quando o usuário faz uma requisição ao seu site, esta requisição primeiro passa pelo Varnish, e se este recurso solicitado já estiver em cache então o Varnish já devolve a resposta sem precisar ir ao servidor de aplicação, evitando um novo processamento.
+</p>
+
+<h2>Instalação</h2>
+<p>
+
+    Varnish possui releases para os seguintes sistemas operacionais:
+</p>
+<ul>
+    <li>Red Hat/CentOS:
+        <script src="https://gist.github.com/victorvhpg/b39bd91e758aa1822832.js"></script>
+    </li>
+    <li>Ubuntu</li>
+    <li>Debian</li>
+    <li>FreeBSD</li>
+</ul>
+
+<p>
+    Para instruções de como instalar o Varnish em cada S.O. acesse <a href="https://www.varnish-cache.org/releases" target="_blank">https://www.varnish-cache.org/releases</a>
+</p>
+
+
+<h2>Configurar o serviço Varnish</h2>
+
+<p>
+    Após a instalação temos que configurar as variáveis do Varnish, que serão carregadas quando o serviço Varnish subir.
+    <br /> Para isso Varnish disponibiliza um arquivo onde podemos configurar estas variáveis
+    <br /> No CentOS/RedHat o arquivo fica localizado em <i><strong>/etc/sysconfig/varnish</strong></i> e no Ubuntu fica em <i><strong>/etc/default/varnish</strong></i>
+
+</p>
+<p>
+    O arquivo de configuração <i><strong>/etc/sysconfig/varnish</strong></i> do serviço Varnish é o seguinte:
+
+</p>
+<script src="https://gist.github.com/victorvhpg/42a6c2bc49556f9f32a9.js"></script>
+<p>
+    Algumas váriaveis importantes:
+    <ul>
+        <li>
+            <strong>VARNISH_LISTEN_PORT</strong>: é a porta em que o Varnish vai ficar escutando </li>
+        <li>
+            <strong> VARNISH_VCL_CONF</strong>: é o arquivo VCL onde fica toda nossa loǵica de cache/balanceamento </li>
+        <li>
+            <strong>VARNISH_STORAGE</strong>: define como serão armazenados os objetos do cache </li>
+    </ul>
+</p>
+
+<p>
+    Após ter configurado o temos que da um start no serviço do Varnish:
+</p>
+<script src="https://gist.github.com/victorvhpg/b5cb135721a8e8349d5c.js"></script>
+
+
+<h2>Rodar o Varnish via linha de comando</h2>
+
+<p>
+    Ao invés de rodar o Varnish como serviço, podemos rodar direto via linha de comando, utilizando o comando
+    <strong><i>varnishd</i></strong>
+
+</p>
+
+<script src="https://gist.github.com/victorvhpg/1e5e3877803736edd8a3.js"></script>
+
+<ul>
+    <li>
+        <strong>-a localhost:80</strong>: é a hostname/porta em que o Varnish vai ficar escutando  </li>
+    <li>
+        <strong>-T localhost:6082</strong>: é a hostname/porta em que a interface  administrativa do Varnish vai ficar escutando  </li>
+    <li>
+        <strong>-f /etc/varnish/default.vcl</strong>: é o arquivo VCL onde fica toda nossa loǵica de cache/balanceamento </li>
+    <li>
+        <strong>-S /etc/varnish/secret</strong>: é o arquivo de  autorização para  interface  administrativa </li>
+    <li>
+        <strong> -s malloc,256M</strong>: como e  onde armazenar o cache </li>
+</ul>
+
+<h2>Verificar se o Varnish esta rodando </h2>
+<p>
+
+Para verificar  se o Varnish  esta rodando podemos executar o comando <strong><i>netstat</i></strong>:
+</p>
+<script src="https://gist.github.com/victorvhpg/e1756ce46a09a6e11edf.js"></script>
+<img src="/assets/conteudo-posts/2015/varnish/netstat.png" alt="" />
+
+
+
+
+<h2> VCL - Varnish Configuration Language</h2>
+<p>
+
+    VCL é a Linguagem de Configuração do Varnish, é com ela  que programamos
+    as  regras de cache, balanceamento de servidores e modificamos   requests.
+    Esta  linguagem é convertida para linguagem C e então compilada.
+
+</p>
+<ul >
+<li>//, # e /* xxxxx */  são usados para comentários</li>
+<li>Não possuem loops</li>
+<li>A execução pode  ser transferida para outra "ação" utilizando return(). Ex: return(hash);</li>
+ <li> Uma  "ação" diz ao Varnish qual é  a próxima coisa que ele deve  fazer,
+     por exemplo  "busque no cache", "não  guarde no cache" ou "gere  uma  mensagem de  erro".
+     As ações existentes são:  lookup, synth, purge, pass, pipe, fetch, deliver, hash, restart, retry, e abandon.
+     <br />
+     As principais ações são:
+     <ul>
+         <li><strong>pass </strong>: Não passa pelo cache, continua o fluxo e não guarda a resposta do servidor em cache</li>
+         <li><strong>pipe </strong>: Cria um canal full-duplex, não continua  o fluxo do Varnish ele simplesmente encaminha a requisição para o servidor sem passar pelo cache</li>
+         <li><strong>hash </strong>: Procura a  requisição no  cache</li>
+         <li><strong>purge </strong>:Remove a  requisição do  cache </li>
+         <li><strong>synth </strong>: Gera uma  resposta criada no  Varnish</li>
+
+     </ul>
+  </li>
+  <li> Operadores:
+  <ul>
+      <li> <strong> =  </strong> atribuição  </li>
+      <li> <strong> ==  </strong> comparação </li>
+      <li> <strong> ~  </strong> contém (usado com expressão regular)  </li>
+      <li> <strong> !  </strong> negação  </li>
+      <li> <strong> &&  </strong> operador lógico "and" </li>
+      <li> <strong> ||  </strong> operador lógico "or" </li>
+  </ul>
+  </li>
+</ul>
+
+
+
+<h2>VCL - Subrotinas</h2>
+<p>
+    Subrotinas em VCL não possuem parametros, e não retornam valores (mas podem retornar ações).<br />
+    Para chamar uma subrotina basta  usar  a palavra <strong>call</strong>  seguida do  nome da subrotina.
+    <br />
+    Exemplo:
+</p>
+<script src="https://gist.github.com/victorvhpg/914361688d84445f4d53.js"></script>
+<p>
+    O Varnish possui subrotinas nativas que iniciam  com o prefixo vlc_*  que são chamadas
+    durante o fluxo de execução de um request, é nessas  subrotinas que colocamos
+    nossa lógica. Para  cada  subrotina o Varnish possui uma  implementação nativa,
+      caso nosso código não retorne alguma ação,
+    esta implementação nativa é executada  após nosso código.<br />
+
+    As possíveis subrotinas são:
+    <ul>
+    <li><strong>    vcl_recv</strong>: é a primeira subrotina a ser executada, quando o Varnish recebe  algum request HTTP, nesta subrotina
+    podemos fazer:
+        <ul>
+            <li>Normalizar o header  da  requisição (ex: adicionar/remover cookies de requisição)</li>
+            <li>Regras  de  o que  deve ir para  o  cache</li>
+            <li>Decidir para qual servidor deve ser usado para  atender a requisição</li>
+            <li>Filtros/barreiras  contra  ataques,por exemplo contra injeção de SQL </li>
+        </ul>
+    </li>
+    <li><strong> vcl_pipe</strong>: </li>
+    <li><strong> vcl_pass</strong>: </li>
+    <li><strong> vcl_hit</strong>: </li>
+    <li><strong> vcl_miss</strong>: </li>
+    <li><strong> vcl_hash</strong>: </li>
+    <li><strong> vcl_purge</strong>: </li>
+    <li><strong>vcl_deliver</strong>: </li>
+    <li><strong> vcl_synth</strong>: </li>
+    <li><strong> vcl_backend_fetch</strong>: </li>
+    <li><strong> vcl_backend_response</strong>: </li>
+    <li><strong> vcl_backend_error</strong>: </li>
+    <li><strong> vcl_init </strong>: </li>
+    <li><strong> vcl_fini </strong>: </li>
+</ul>
+<br />
+As ações que cada subrotinas  pode  retornar são:
+</p>
+<div class="imgPost">
+<img src="/assets/conteudo-posts/2015/varnish/acoes.png" alt="" />
+<label>Fonte: Livro: The Varnish Book </label>
+</div>
+
+<p>
+    Dentro das  subrotinas estão  disponíveis alguns objetos (resp, req, beresp, bereq e obj).
+    <br />
+    Cada objeto é acessível  apenas em algumas subrotinas conforme
+    a figura abaixo:
+
+</p>
+<div class="imgPost">
+<img src="/assets/conteudo-posts/2015/varnish/objs.png" alt="" />
+<label>Fonte: Livro: The Varnish Book </label>
+</div>
+
+
+<div class="imgPost">
+<img src="/assets/conteudo-posts/2015/varnish/flow.png" alt="" />
+<label>Fonte: Livro: The Varnish Book </label>
+</div>
+
+
+<p>
+
+    Por padrão o arquivo  VCL padrão  é :
+
+
+
+
+</p>
