@@ -4,7 +4,7 @@ title: Sobre
 permalink: /sobre/
 ---
 
-<p> Olá bem vindo  ao  meu  blog, meu nomé é Victor Hugo de Paiva Gonçales,  atualmente  sou  Analista de Sistemas (na área de desenvolvimento WEB)  na Unoeste e sou sócio fundador da 'Escolha Tecnologia',    e nas horas  vagas desenvolvo  sistemas/aplicativos/jogos multiplataformas baseados   na WEB, entre  outras  coisas  relacionadas a programação/desenvolvimento.<br /> </p>
+<p> Olá bem vindo  ao  meu  blog, meu nomé é Victor Hugo de Paiva Gonçales,  atualmente  sou  Analista de Sistemas (na área de desenvolvimento WEB)  na Unoeste e sou sócio fundador da 'Escolha Tecnologia',   nas horas  vagas desenvolvo  sistemas/aplicativos/jogos multiplataformas baseados   na WEB, entre  outras  coisas  relacionadas a programação/desenvolvimento.<br /> </p>
 
 <p> Gosto de tudo relacionado a lógica desde sempre, mas comecei no mundo da programação com Assembly para microcontrolador 8051, depois Ladder para CLP em meados de 2006/2007  quando ainda fazia curso  técnico de Eletroeletrônica no SENAI, depois quando entrei  na  faculdade conheci outras  linguagens, mas com foco na WEB, e desde  então tudo que  for relacionado desenvolvimento baseado  em tecnologias abertas WEB me interessa, como  sistemas WEB/sites(backend e frontend), jogos, aplicativos mobile, padrões de desenvolvimento,   entre  outros.
 
