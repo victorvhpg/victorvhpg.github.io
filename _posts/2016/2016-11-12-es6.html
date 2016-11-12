@@ -1,0 +1,342 @@
+---
+layout: post
+title: Novos recursos do JavaScript com o ES6 (ES2015)
+date: '2016-11-12'
+author: Victor Hugo
+image: https://victorvhpg.github.io/assets/conteudo-posts/2016/es6/logo.jpg
+tags:
+- javascript
+- es6
+---
+
+
+<div style="text-align:center;padding:20px 0">
+    <img src="https://victorvhpg.github.io/assets/conteudo-posts/2016/es6/logo.jpg" alt="" style="width:350px" />
+</div>
+
+<p>
+    ECMAScript 6(ES6) é a sexta versão padronizada do JavaScript, agora conhecida oficialmente como ECMAScript 2015 (ES2015), foi finalizada em Junho de 2015, foi o maior update do JavaScript, arrumando bugs da linguagem, trazendo novos recursos e algumas
+    novas sintaxes.
+    <br /> Hoje em dia já é utilizado por muitos projetos e é fundamental conhecer esses novos recursos do JavaScript.<br /> Neste post irei comentar apenas alguns dos novos recursos, existem muito mais recursos :).<br />Irei comentar sobre seguintes
+    recursos:
+</p>
+<ul>
+    <li>Escopo let/const</li>
+    <li>Template Literals</li>
+    <li>Parâmetros com valores padrões</li>
+    <li>Parâmetros Rest</li>
+    <li>Operador Spread</li>
+    <li>Arrow Functions (( ) => { })</li>
+    <li>Novos recursos para Objetos Literais</li>
+    <li>Object Destructuring</li>
+    <li>Array Destructuring</li>
+    <li>Rest Item</li>
+    <li>Parâmetros com 'Destructuring'</li>
+    <li>Classes "Class"</li>
+    <li>Módulos</li>
+</ul>
+
+<h2>Escopo let/const</h2>
+<p>
+    Agora temos escopo por bloco, igual a algumas linguagens tipo o C, C#, Java etc..., para ter acesso a variáveis de escopo, precisamos utilizar ao invés de <code>var</code> temos que utilizar a palavra reservada <code>let</code> para variáveis e <code>const</code>    para constantes.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/b98412f7062b1b6a14253d6bee26df21.js"></script>
+<p>
+    Variáveis ou constantes não podem ser declaradas mais de uma vez no mesmo escopo.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/54827a10ac51f746f94c3fba156f5400.js"></script>
+<p>
+    Mas este não causa erro:
+</p>
+<script src="https://gist.github.com/victorvhpg/110324a3244a1d36b27527c0a9e81c79.js"></script>
+
+<p>
+    Com escopo por bloco, agora podemos fazer coisas tipo isso:
+</p>
+<script src="https://gist.github.com/victorvhpg/3a376fa79d6590e23051db03b60768d4.js"></script>
+<p>
+    Sem escopo por bloco temos que criar um escopo a cada iteração:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/98212bd4fa901b43623af8511eee38d4.js"></script>
+<p>
+    Outra característica é que let/const não poluem o objeto global (window no caso de browser) caso declarado num escopo global.
+</p>
+<h2>Template Literals</h2>
+<p>
+    Nova maneira de criar strings e com novos recursos, como strings multiline e formatação por substituições de variáveis (Interpolação de Expressões).<br /> Para criar esse tipo de string devemos utilizar o caracter <code>`</code> (acento craseado).<br
+    /> Podemos ter quebras de linhas(multiline) sem a necessidade de concatenar.</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/4654cd2ddd15bd35d70c8cb41a2ccea7.js"></script>
+
+<p>
+    Também podemos fazer substituições utilizando <code>${}</code>. Sendo que entre {} podemos ter qualquer variável ou expressão que retorne algum valor.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/514823bc496b1f2f9cf366175768cde6.js"></script>
+<h3> Tagged Template Literals </h3>
+<p>
+    'Tagged template' é uma função que é executada na string "Template". Esta função recebe no primeiro parâmetro um array que é a string sem as substituições, sendo que cada posição do array é uma parte da string sem a substituição, o segundo parâmetro são
+    as substituições.O retorno da string será o retorno desta função. (Obs: o modo de chamar esta função é assim: <code>funcTag`aaaaaaaaa`</code>, sem os parênteses mesmo)
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/9703cd836dfb3de6744e3c0e5df6e3ce.js"></script>
+
+<h2>Parâmetros com valores padrões</h2>
+<p>
+    São valores que são atribuídos para os parâmetros que não são informados na chamada da função.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/85dd87a382904a3a4b7d06a5e60d14ec.js"></script>
+
+<h2>Parâmetros Rest</h2>
+<p>
+    Um parâmetro Rest é indicado com 3 pontos (...) antes do nome do parâmetro. O parâmetro Rest é uma array contendo todos os valores restantes passados para a função.
+    <br /> Só deve existir apenas 1 parâmetro Rest numa função e este deve ser o último parâmetro.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/b00b3998820bc05ca117aba120e65cf1.js"></script>
+
+
+<h2>Operador Spread </h2>
+<p>
+    Operador Spread transforma um array em argumentos individuais numa chamada de função. São indicados também por 3 pontos (...) mas nas chamadas de função.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/5514de0e1834df64c855580b3a95faeb.js"></script>
+
+<h2>Arrow Functions (( ) => { })</h2>
+<p>
+    Uma nova sintaxe de criar funções e com algumas caracteristicas:<br />
+</p>
+<!--  -->
+<ul>
+    <li>Não podem ser funções construtoras (não pode utilizar <code>new</code> para instanciação)</li>
+    <li>Não possuem <code>prototype</code></li>
+    <li>O contexto (this) é do contexto da função (não arrow) mais próxima (a função pai)</li>
+    <li>Não possuem o objeto <code>arguments</code></li>
+    <li>Seu contexto não pode ser alterado por call(), apply(), ou bind()</li>
+</ul>
+<p>
+    A sintaxe da Arrow function é a seguinte:
+    <code>(parâmetros) => {corpo da função}</code>
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/31562c2b62ea14cf39496bff9a61f4a6.js"></script>
+
+<p>
+    Outra caracterisca da arrow function é quando a função de apenas uma instrução retorna um objeto literal, neste caso devemos envolver o corpo da funcão entre parênteses.
+</p>
+<script src="https://gist.github.com/victorvhpg/08970aeb69d82a2b93f2e749dd021c41.js"></script>
+
+<p>
+    Outros exemplos de arrow function:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/150720c5c4fbac3873afcfb155c6519d.js"></script>
+
+
+<h2>Novos recursos para Objetos Literais</h2>
+<ul>
+    <li>
+        <p>
+            <strong>Inicializador de propriedades:</strong> é uma maneira curta de atribuir valores para propriedades de um objeto. para variaveis que possuem o mesmo nome da propriedade
+        </p>
+        Exemplo:
+        <script src="https://gist.github.com/victorvhpg/d264b4cb86065e8e0b9b6e8560708ea5.js"></script>
+    </li>
+    <li>
+        <p>
+            <strong>Criar método:</strong>
+            <p>
+                Novo modo de criar métodos em objetos literais, eliminando <code>':'</code> e a palavra <code>'function'</code>.
+            </p>
+        </p>
+        Exemplo:
+        <script src="https://gist.github.com/victorvhpg/7d21020df7756b0ce8c055ca54555a70.js"></script>
+    </li>
+
+    <li>
+        <p>
+            <strong>Nome de propriedades computadas( definidas com o resultado de uma expressão)</strong> Agora podemos definir uma propriedade dinamicamente, para isso é necessário usar <code>[(expressão)] : valor</code> sendo que a expressão pode ser
+            qualquer variavel ou expressão que retorne algum valor que será o nome da propriedade.
+        </p>
+        Exemplo:
+        <script src="https://gist.github.com/victorvhpg/97761ea53c6b4f05a18273134c361392.js"></script>
+    </li>
+</ul>
+
+<h2>Object Destructuring</h2>
+<p>
+    É uma maneira mais simples e econômica de criar variáveis com valores das propriedades de um objeto.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/372422fea6a862b06be04d0386f855c0.js"></script>
+
+<h2>Array Destructuring</h2>
+<p>
+    Possui a mesma idéia do Object Destructuring, mas com Arrays, ou seja você cria variavés extraindo valores de um Array. Ao invés de nomes de propriedades ele utiliza a posição do item do Array para atribuir valor a variável.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/0e404d80f33f9cb85aedd7fb2cf55dde.js"></script>
+
+<h2>Rest Item</h2>
+<p>
+    No contexto de atribuição 'Destructuring' utiliza-se Rest Item para atribuir os valores restantes do array para uma variável. É indicado também usando 3 pontos (...), mas na atribuição.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/eb5fe367c20f170f80b460a3433fb7c9.js"></script>
+
+<h2>Parâmetros com 'Destructuring'</h2>
+<p>
+    Podemos usar toda a ideia de 'Destructuring' nos parâmetros de uma função.
+
+</p>
+<script src="https://gist.github.com/victorvhpg/f682e715da365c1fef014399c6b47deb.js"></script>
+<h2>Classes  "Class" </h2>
+<p>
+    Agora temos uma nova sintaxe para criar "classes", mas internamente ainda é tudo baseado em <code>prototype</code>. Para cria função construtora ("classe"), utilizamos a palavra reservada <code>class</code>.
+</p>
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/1df0d08fc775300c33b3fce6c28e2c9a.js"></script>
+<p>
+    Seria basicamente o mesmo que:
+
+</p>
+<script src="https://gist.github.com/victorvhpg/18b18ac83fc73f5717f412f53785461d.js"></script>
+
+
+<p>
+    Algumas características das classes criadas com <code>class</code>:
+</p>
+<!-- -->
+<ul>
+    <li>
+        Não podemos criar propriedades no corpo da 'class'. Para criar propriedades devemos usar o construtor ou via métodos set/get.
+    </li>
+    <li>
+        Não sofrem 'hoisting' pela engine Javascript, diferente das funções que sofrem 'hoisting'.
+    </li>
+    <li>
+        Executam em modo <code>strict</code>.
+    </li>
+
+    <li>
+        Só podem ser chamadas com <code>new</code>.
+    </li>
+
+    <li>
+        Os métodos não devem ser chamados com <code>new</code>, e eles não são <code>enumerable</code> (não vão aparecer no Object.keys por exemplo).
+    </li>
+
+    <li>O nome da classe não pode ser sobrescrito dentro dos métodos</li>
+</ul>
+<p>
+    Se fosse criar uma classe sem <code>class</code> seguindo estas caracteristicas poderíamos fazer o seguinte:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/e0bcffe12a8ce4ffc9f55a894e7dad4d.js"></script>
+
+<h3>Herança "extends"</h3>
+<p>
+    No JavaScript a 'Herança' ocorre por prototype, existem algumas maneiras de fazer isso, uma delas é a seguinte:
+</p>
+<script src="https://gist.github.com/victorvhpg/cdb39eb41d0c07488afe914a032eb0ec.js"></script>
+
+<p>
+    Agora com o ECMAScript 6 foi adicionada a palavra reservada <code>extends</code> para realizar herança de uma maneira mais simples.
+    <br />Também criada a palavra <code>super</code> para acessar a classe base
+    <br /> Veja como ficaria o exemplo anterior:
+</p>
+<script src="https://gist.github.com/victorvhpg/abb93d16d657affe1904c8e56a9bc62b.js"></script>
+<p>
+    Algumas considerações:
+</p>
+<ul>
+    <li>No construtor, o<code>super</code> deve ser chamado antes de qualquer acesso à <code>this</code> </li>
+    <li>Caso a classe que está realizando extends não defina o <code>constructor</code> ele será definido e chamado implicitamente passando todos os parâmetros.
+        <script src="https://gist.github.com/victorvhpg/84e65aa5f207730a6a87e2b5fc6281d5.js"></script>
+    </li>
+    <li>Podemos sobrescrever um método com mesmo nome da classe base, e também podemos ter acesso ao método base usando o <code>super</code>, por exemplo <code>super.getNome()</code> </li>
+
+</ul>
+
+<h3>Métodos estáticos</h3>
+
+<p>
+    Para criar um método estático utilizamos a palavra <code>static</code> antes do nome do método.<br /> Obs:Classes que usam herança também herdam os métodos estáticos da classe base.
+</p>
+
+Exemplo:
+<script src="https://gist.github.com/victorvhpg/27b8d02f6afbae9cab141a07ad580b50.js"></script>
+
+<h2>Módulos</h2>
+<p>
+    Enfim agora temos oficialmente um sistema de módulos no JavaScript, por muitos anos os desenvolvedores veêm utilizando módulos AMD, CommonJS, UMD, e etc... atráves de algumas ferramentas como require.js, webpack, browserify etc... ou no Node nativamente
+    com padrão CommonJS . Mas agora temos um padrão oficial de módulos na linguagem.
+</p>
+<h3>
+  O que são Módulos?
+</h3>
+<p>
+    Um módulo é um arquivo JavaScript "isolado"(as váriaveis declaradas só ficam visíveis dentro do módulo) que podemos exportar alguma função, variável, ou objeto. Para exportar utilizamos a palavra <code>export</code> e para que podemos acessar algum
+    recurso de algum módulo devemos importar-lo utilizando a palavra <code>import</code>.
+</p>
+<h3>Export</h3>
+
+<p>
+    Em um módulo podemos exportar mais de uma variável, veja alguns exemplos:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/d4cabb26dc7bfceff849416590149398.js"></script>
+
+<h3>Import</h3>
+<p>
+    Para utilizar um módulo devemos importá-lo, podemos importar de várias formas, sendo que a sintaxe básica de importar é a seguinte:
+    <code>import { algumIdentificador } from 'caminho-do-modulo' </code> <br /> Entre <code>{}</code> colocamos os nomes das variáveis(identificadores) que vamos 'importar' do módulo, no <code>from</code> devemos especificar o caminho do módulo, sendo
+    que nos browsers o "caminho-do-modulo" deve ter a extensão '.js'. Para modulos que são exportados com 'default' não precisamos de <code>{}</code>.
+    <br /> Veja os exemplos:
+</p>
+<script src="https://gist.github.com/victorvhpg/d58a24932495e6940de697098138d226.js"></script>
+<p>
+    Obs: o módulo é executado apenas no primeiro import, mesmo se você tiver outro import ele não irá executar o módulo, pois ele utilizará a referência do modulo que já estará em memória.
+
+</p>
+
+<h3>import/export módulos default</h3>
+<p>
+    Podemos utilizar a palavra <code>default</code> para exportar apenas uma variável que pode ser anônima, o módulo só pode ter apenas um <code>default</code>, por exemplo:
+</p>
+
+<script src="https://gist.github.com/victorvhpg/1f37721a1213abb2c43a1a4e42e8b2fc.js"></script>
+
+<p>
+    Para importar algum modulo default, devemos fazer o seguinte:
+</p>
+<script src="https://gist.github.com/victorvhpg/25b2c55d620a09cf4b0aa4bfec47be7d.js"></script>
+
+<h2>Já podemos usar ECMAScript 6 ?</h2>
+<p>
+    Sim, já podemos utilizar, veja a tabela abaixo que mostra percentual de recursos do ES6 que já foram implementados em cada ambiente:</p>
+<p>
+    <a href="https://victorvhpg.github.io/assets/conteudo-posts/2016/es6/tabelaes6.png" target="_blank">
+        <img src="https://victorvhpg.github.io/assets/conteudo-posts/2016/es6/tabelaes6.png" />
+    </a><br /><br /> Para dar suporte a ambientes antigos podemos utilizar um transpiler que transforma nosso código ES6 para ES5. O Babel é a ferramenta adequada para fazer isso. Podemos usá-lo com o gulp, webpack etc...<br/> Acesse <a href="http://babeljs.io/repl/"
+        target="blank">http://babeljs.io/repl/</a> e escreva algum código ES6 para ver como fica o código compilado para ES5.
+</p>
+
+<h2>Conclusão</h2>
+<p>O ES6 foi realmente o maior update do JavaScript, trazendo muitas facilidades e mais poder para a linguagem, sem dúvida nenhuma foi uma grande melhoria, mas não para ai, agora todo ano terá uma nova especificação para o ECMAScript, lógico que não tão
+    grande igual a ES6. Já temos a ES7(ES 2016) e a ES8(ES2017) por exemplo.<br />
+
+</p>
+
+
+<h2> Referências </h2>
+
+<ul>
+    <li><a href="http://exploringjs.com/es6/index.html" target="_blank">Exploring ES6</a></li>
+    <li><a target="_blank" href="https://www.amazon.com.br/Understanding-Ecmascript-Definitive-JavaScript-Developers/dp/1593277571">Understanding ECMAScript 6</a></li>
+</ul>
