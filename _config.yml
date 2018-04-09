@@ -9,3 +9,4 @@ twitter_username: victorvhpg
 github_username:  victorvhpg
 # Build settings
 markdown: kramdown
+exclude: [assets/conteudo-posts/2018/redux/conta-bancaria/node_modules]

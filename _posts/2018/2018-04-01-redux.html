@@ -1,0 +1,298 @@
+---
+layout: post
+title: Redux - Gerenciando mudanças de estado de uma aplicação JavaScript.
+date: '2018-04-01'
+author: Victor Hugo
+image: https://victorvhpg.github.io/assets/conteudo-posts/2018/redux/logo.png
+tags:
+- javascript
+- redux
+- react
+---
+<div style="text-align:center;padding:20px 0">
+        <img src="/assets/conteudo-posts/2018/redux/logo.png" alt="" style="width:350px" />
+    </div>
+
+
+
+    <p>
+        Redux é uma biblioteca utilizada para gerenciar o
+        <b>state</b>(estado) de uma aplicação, ideal para
+        <b>Single Page Applications (SPA)</b>, mas pode ser usado em qualquer aplicação. <br />
+        Apesar de muito se falar do uso dele com React, Redux é agnóstico a framework, ou
+            seja, você pode utilizar junto com qualquer outro framework ou apenas com javascript puro. <br />
+    </p>
+    <p>
+         É inspirado na arquitetura
+        <a target="_blank" href="https://facebook.github.io/flux/docs/in-depth-overview.html#content">Flux</a> criada pelo Facebook,
+         e também é inpirado em alguns conceitos da <a href="https://en.wikipedia.org/wiki/Functional_programming" target="_blank" >programação funcional</a>.
+        A comunicação entre os elementos da aplicação se torna unidirecional, o
+        <b>state</b> inteiro de sua aplicação está representado em um único objeto javascript, que pode conter uma árvore de objetos
+        aninhados ou não, este <b>state</b> é imutável, as mudanças devem ser realizadas através da geração de um novo <b>state</b> de acordo com a ação desejada.
+    </p>
+    <p>
+            Quando utilizei pela primeira vez, assim como no Flux, eu não gostei muito do Redux, devido a ter que escrever muito <i>overhead</i> de código,
+            mas recomendo para aplicações que demandam muitas interações, compartilham dados em diferentes partes da aplicação,
+            requerem mudanças de dados frequentemente, no geral uma aplicação não muito trivial, pois
+            utilizar Redux acaba sendo um pouco custoso para aplicações muito simples, devido a ter um <i>overhead</i> de codificação para seguir suas características.
+
+
+    </p>
+    <p>
+
+
+        A seguir algumas características importantes do Redux:
+
+        <ul>
+            <li>O fluxo de comunicação é unidirecional;</li>
+            <li>O
+                <b>state</b> inteiro de sua aplicação está centralizado num único lugar, o que também facilita a normalização dos
+                dados;</li>
+            <li>O
+                <b>state</b> nunca muda diretamente ele é imutável, mudanças são disparadas(<strong>dispatch</strong>) por ações(<strong>actions</strong>) e manipuladas por funções puras(<strong>reducers</strong>), que retornam uma cópia do
+                <b>state</b> com as alterações desejadas;</li>
+            <li>O código é estruturado seguindo as características já citadas, o que facilita o entendimento da equipe de desenvolvimento
+                que já está habituada com este "padrão".</li>
+        </ul>
+    </p>
+
+
+    <p>
+        Redux é basicamente constituído de 4 itens:
+        <strong>Actions</strong>,
+        <strong>Reducers</strong>,
+        <strong>Middlewares</strong> e
+        <strong>Store</strong>. A seguir irei comentar um pouco de cada um:
+    </p>
+
+    <h2>Actions</h2>
+    <p>
+
+        Actions são representadas por um objeto literal que descreve que ação ocorreu e que dados foram alterados, são disparadas
+        pelo metodo
+        <b>dispatch</b> da <b>store</b> (
+        <b>store</b>.dispatch(action)</b>), podem ser invocadas por eventos da interface, rede, timers, ações do usuário ou outra fonte
+        que tenha intenção de manipular os dados de alguma forma.
+        <br /> As actions devem ter uma propriedade chamada
+        <b>
+            <b>type</b>
+        </b> que indica que tipo de ação foi disparada. Redux só exige que a <b>action</b> tenha um
+        <b>
+            <b>type</b>
+        </b>, mas existe um padrão para actions que podemos seguir:
+        <a target="_blank" href="https://github.com/redux-utilities/flux-standard-action">Flux Standard Action</a>.
+        <br /> Seguindo este padrão, as propriedades permitidas para uma <b>action</b> são
+        <b>type</b>,
+        <b>payload</b>,
+        <b>error</b> e
+        <b>meta</b>.
+        <br />
+        <br /> Uma action
+        <b>DEVE</b>:
+        <ul>
+            <li> Ser objeto javascript literal</li>
+            <li>Ter a propriedade type: uma constante string que identifica a ação</li>
+
+        </ul>
+        Uma action
+        <b>PODE</b> ter:
+        <ul>
+            <li> Propriedade error: se for true a <b>action</b> é considerada uma ação de erro, e a informação de erro deve ser definida
+                no payload</li>
+            <li> Propriedade payload. Pode ser qualquer valor que represente o payload da ação, os dados que representam esta ação.
+                Se error for true o payload deve ser um objeto Error</li>
+            <li> Propriedade meta: Pode ser qualquer informação extra não contida no payload
+            </li>
+        </ul>
+
+
+        Podemos criar atalhos para gerar nossas actions, isso é chamado de
+        <b>Action Creator</b>, que nada mais é uma função que retorna uma <b>action</b>.
+        <br /> Caso a
+        <b>action creator</b> necessite ler o
+        <b>state</b> atual da aplicação, chamar uma API, chamadas de rotas, então esta <b>action</b> deve retornar uma
+        <b>function</b>, que adiará a execução da <b>action</b>, onde nestes casos são gerenciadas pelos
+        <b>middlewares</b>, como por exemplo
+        <a target="_blank" href="https://github.com/gaearon/redux-thunk">
+            <b>redux-thunk</b>
+        </a>.
+    </p>
+
+    <p>
+        Exemplo de actions:
+        <script src="https://gist.github.com/victorvhpg/d286ed3425a3e8e635ac0cd32a6c16ba.js"></script>
+    </p>
+
+
+
+
+
+
+    <h2>Reducers</h2>
+    <p>
+        Reducers são
+        <a target="_blank" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">funções puras</a>
+        responsáveis pela mudança do
+        <b>state</b> da aplicação, como
+        <b>state</b> deve ser imutável, nos reducers devemos criar uma cópia do
+        <b>state</b> com as mudanças desejadas. Podemos ter vários reducers, cada um gerenciando um pedaço do
+        <b>state</b> da aplicação.
+        <br /> Um reducer recebe por parâmetro o
+        <b>state</b> atual da aplicação e uma <b>action</b>, e retorna o novo
+        <b>state</b>, não devem ter chamadas impuras, dado um input ele deve retornar o mesmo output esperado, não devem alterar
+        variáveis fora do escopo, não fazem chamadas as APIs, não devem ter
+        <a href="https://en.wikipedia.org/wiki/Side_effect_(computer_science)"
+            target="_blank">
+            <b>side effect</b>
+        </a>. O retorno da execução de todos os reducers será o novo
+        <b>state</b> da aplicação a cada <b>action</b> disparada, ou seja, toda vez que é disparado uma <b>action</b>, todos os reducers são executados
+        e assim é calculado o novo
+        <b>state</b> da aplicação.<br />
+        O Redux possui uma
+        função chamada <b>combineReducers</b> que facilita a combinação dos
+        reducers gerando um único reducer, necessário quando temos vários reducers que gerenciam partes diferentes do <b>state</b>.
+
+    </p>
+    <p>
+        Exemplo de reducer:
+        <script src="https://gist.github.com/victorvhpg/9432de8507cba15e52a2ad9dcc3fec17.js"></script> Obs: perceba que utilizei a sintax
+        <a href="https://redux.js.org/recipes/using-object-spread-operator" target="_blank">
+            <b>Object Spread Operator</b>
+        </a>(...state) para criar uma cópia do state
+    </p>
+
+    <h2>Middlewares</h2>
+    <p>
+        Middlewares são funções que interceptam uma <b>action</b> antes dela chegar aos reducers e depois que é obtido uma novo <b>state</b>.
+        Middlewares são muito úteis, podem ser utilizados para  ações assíncronas,
+        logs, chamadas de API, monitorar mudanças do <b>state</b>, colocar um delay na execução da <b>action</b>, e etc...<br />
+
+      Para colocarmos os middlewares dentro da <b>store</b> devemos utilizar
+       a função <b>applyMiddleware</b> do Redux.
+
+
+
+
+
+    </p>
+    <p>
+            Estrutura de  um middleware:<br />
+            <code><i>({ getState, dispatch }) => next => action => next(action);</i></code>
+            <ul>
+                 <li>Recebe getState, e dispatch da <b>store</b>, assim é possível
+                     obter o state(<b>getState</b>) e também poder disparar(<b>dispatch</b>) outras actions;  </li>
+                 <li>Para encaminhar a <b>action</b> para outros middlewares
+                     até atingir os reducers devemos usar o <b>next</b> passando a <b>action</b>;</li>
+                 <li>O retorno do middleware é o que será
+                      retornado na chamada do dispatch que iniciou a <b>action</b>,
+                      logo abaixo nos exemplos de middlewares  fiz um middleware de delay(colocarDelay) que
+                      retorna uma function para cancelar o delay caso necessário.</li>
+            </ul>
+    </p>
+    Exemplos de como criar Middlewares:
+    <script src="https://gist.github.com/victorvhpg/7b8ecc15f80011c76da5dd472b9994f3.js"></script>
+
+    <p>
+            Middlewares bastante usados na comunidade Redux:
+            <a target="_blank" href='https://github.com/gaearon/redux-thunk'>redux-thunk</a>,
+            <a target="_blank" href='https://github.com/evgenyrodionov/redux-logger'>redux-logger</a>,
+            <a target="_blank" href='https://redux-saga.js.org'>redux-saga</a>.
+
+
+    </p>
+
+    <h2>Store</h2>
+<p>
+        Diferente do Flux, no Redux só temos uma <b>store</b>,  que é responsável por gerenciar o
+        <b>state</b> da aplicação, orquestra todo o fluxo de comunicação,
+         oferece métodos para obter o
+        <b>state</b>, escutar e disparar ações.
+         <br />
+         Oferece os seguintes métodos:
+        <ul>
+            <li><strong>getState()</strong>: retorna o <b>state</b>;</li>
+            <li><strong>dispatch(action)</strong>: dispara a <b>action</b>;</li>
+            <li><strong>unsubscribe = subscribe(fn)</strong>: registra uma função(fn)
+                que ficará ouvindo as mudanças
+                 do <b>state</b>, ou seja ela será executada toda vez que o <b>state</b> mudar;</li>
+            <li>Para fazer o unsubscribe, ou seja parar de ouvir as mudanças de <b>state</b>,
+                devemos executar a <i>function</i> que o subscribe retorna.</li>
+        </ul>
+        Para criar a <b>store</b> utilizamos a função <b>createStore</b> do Redux.
+</p>
+Criando a store:
+<script src="https://gist.github.com/victorvhpg/a38ad76759fbc24cc7acaa3e601b75cc.js"></script>
+
+
+
+
+    <h2>Fluxo de dados</h2>
+    <p>
+        O fluxo de dados é unidirecional,
+        e é gerenciado por apenas 1 <b>store</b>, que orquestra todo o fluxo de comunicação dos dados
+        da aplicação.
+        <br /> Tendo a <b>store</b> criada e os ouvintes de mudança de
+        <b>state</b> configurados, o fluxo funciona da seguinte forma:
+    </p>
+    <ul>
+        <li>É disparado uma
+            <b>action</b> através do método
+            <b>dispatch</b> da <b>store</b>, contendo os dados que foram alterados e o tipo de ação realizada. Normalmente quem incia esta
+            <b>action</b> é algum evento gerado pela View da aplicação; </li>
+        <li>A <b>store</b> então encaminha esta
+            <b>action</b> para os
+            <b>middlewares</b>, estes que por sua vez podem fazer outras chamadas (async, ajax, timers, logs) e dispararem outras
+            actions caso necessário;</li>
+        <li>Em seguida a <b>store</b> encaminha a
+            <b>action</b> para os
+            <b>reducers</b>, que serão responsáveis em retornar o novo
+            <b>state</b> da aplicação baseado na
+            <b>action</b> recebida e o
+            <b>state</b> atual; </li>
+        <li>Após a execução de todos os
+            <b>reducers</b>, é obtido um novo
+            <b>state</b>, então a <b>store</b> notifica os ouvintes que houve uma alteração de
+            <b>state</b>;
+        </li>
+        <li>Os ouvintes que normalmente são os componentes das Views, renderizam novamente com os dados atualizados</li>
+    </ul>
+    <p>Todo este fluxo pode ser representado pelo seguinte diagrama:</p>
+
+
+    <a style='display:block;text-align:center;border:1px solid #777;' href="/assets/conteudo-posts/2018/redux/redux.png" target="_blank">
+        <img src="/assets/conteudo-posts/2018/redux/redux.png" />
+        <label style='display:block;text-align:center;font-size:10px; color:#333'>Fluxo de dados do Redux</label>
+    </a>
+
+
+
+    <h2>Indo além</h2>
+    <p>
+        Redux ajuda muito a gerenciar o state de sua aplicação
+         de um maneira simples e organizada, eu só falei sobre o Redux, mas quando utilizado com
+         React temos algumas facilidades através do
+         <a href="https://github.com/reactjs/react-redux" target="_blank">react-redux</a> que traz algumas facilidades para
+         tornar o desenvolvimento com redux mais simples ainda. No proximo post talvez eu fale sobre         <a href="https://github.com/reactjs/react-redux" target="_blank">react-redux</a>.
+         <br />
+         Outra coisa interessante são alguns conceitos de
+          <a href="https://en.wikipedia.org/wiki/Functional_programming" target="_blank">programação funcional</a>, o ideal é você se aprofundar
+         nestes conceitos, Redux é muito influenciado pelos conceitos da programação funcional.<br />
+         Uma das coisas que achei legal do Redux é que a comunidade javascript criou algumas ferramentas de debug  muito
+         interessantes, recomendo que deem uma olhada no
+         <a href="https://github.com/zalmoxisus/redux-devtools-extension" target="_blank">redux-devtools</a> é muito legal :)
+
+    </p>
+
+
+    <h2> Referências </h2>
+
+    <ul>
+        <li><a href="https://redux.js.org" target="_blank">Documentação do  Redux</a></li>
+        <li><a target="_blank" href="https://leanpub.com/redux-book">The Complete Redux Book</a></li>
+        <li><a target="_blank" href="https://github.com/victorvhpg/exemplo-redux-simples/tree/master/src">Meu repositório de exemplo simples do Redux </a></li>
+
+
+    </ul>
+
+
+

@@ -10,7 +10,7 @@ permalink: /sobre/
 
 </p>
 
-<p> Atualmente tenho experiência em banco de dados, desenvolvimento mobile, padrões de desenvolvimento/WEB, CSS, JavaScript, HTML5, jQuery, Java, PHP, C#,  ASP clássico, ASP.NET, Node.js, node-webkit(NW)/Electron, Phonegap/Cordova, GIT, RequireJS, Browserify, Webpack React.JS, Arquitetura Flux, MVC,   entre outras  coisas.  </p>  <p> Atualmente JavaScript(desde 2008)  é umas  das linguagens que eu tenho mais interesse  e com certeza  a mais interessante (se você souber de verdade ;)), pois hoje em dia JavaScript  roda em qualquer  ambiente  desde Sistemas Operacionais para Mobile/TV até servidores WEB.<br /> Gosto aprender novas tecnologias, afinal a área de  desenvolvimento está em constante evolução.
+<p> Atualmente tenho experiência em banco de dados, desenvolvimento mobile, padrões de desenvolvimento/WEB, CSS, JavaScript, HTML5, jQuery, Java, PHP, C#,  ASP clássico, ASP.NET, Node.js, node-webkit(NW)/Electron, Phonegap/Cordova, GIT, RequireJS, Browserify, Webpack, React.JS, Arquitetura Flux, Redux, MVC,   entre outras  coisas.  </p>  <p> Atualmente JavaScript(desde 2008)  é umas  das tecnologias que eu tenho mais interesse.<br /> Gosto aprender novas tecnologias, afinal a área de  desenvolvimento está em constante evolução.
 
 </p>
 
