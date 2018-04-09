@@ -68,10 +68,9 @@ tags:
     <h2>Actions</h2>
     <p>
 
-        Actions são representadas por um objeto literal que descreve que ação ocorreu e que dados foram alterados, são disparadas
+        Actions são representadas por um objeto literal que descreve que ação ocorreu e quais dados foram alterados, são disparadas
         pelo metodo
-        <b>dispatch</b> da <b>store</b> (
-        <b>store</b>.dispatch(action)</b>), podem ser invocadas por eventos da interface, rede, timers, ações do usuário ou outra fonte
+        <b>dispatch</b> da <b>store</b> (<b>store</b>.dispatch(action)</b>), podem ser invocadas por eventos da interface, rede, timers, ações do usuário ou outra fonte
         que tenha intenção de manipular os dados de alguma forma.
         <br /> As actions devem ter uma propriedade chamada
         <b>
@@ -87,21 +86,22 @@ tags:
         <b>error</b> e
         <b>meta</b>.
         <br />
-        <br /> Uma action
+        <br />
+        Uma action
         <b>DEVE</b>:
         <ul>
-            <li> Ser objeto javascript literal</li>
-            <li>Ter a propriedade type: uma constante string que identifica a ação</li>
+            <li> Ser objeto javascript literal;</li>
+            <li>Ter a propriedade type: uma constante string que identifica a ação.</li>
 
         </ul>
         Uma action
         <b>PODE</b> ter:
         <ul>
             <li> Propriedade error: se for true a <b>action</b> é considerada uma ação de erro, e a informação de erro deve ser definida
-                no payload</li>
+                no payload;</li>
             <li> Propriedade payload. Pode ser qualquer valor que represente o payload da ação, os dados que representam esta ação.
-                Se error for true o payload deve ser um objeto Error</li>
-            <li> Propriedade meta: Pode ser qualquer informação extra não contida no payload
+                Se error for true o payload deve ser um objeto Error;</li>
+            <li> Propriedade meta: Pode ser qualquer informação extra não contida no payload.
             </li>
         </ul>
 
